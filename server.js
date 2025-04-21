@@ -22,7 +22,11 @@ io.on("connection", (socket) => {
     console.log("Message received:", msg);
     io.emit("chat message", msg);
   });
-
+  
+  socket.on('typing', (data) => {
+    socket.broadcast.emit('typing', data); // Send to everyone except the sender
+  });
+  
   socket.on("disconnect", () => {
     console.log("User disconnected:", socket.id);
   });
